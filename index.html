@@ -1,36 +1,579 @@
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jolly English Academy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
-    <style>
-      body {
-        font-family: 'Poppins', sans-serif;
-      }
-      .font-pacifico {
-        font-family: 'Pacifico', cursive;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jolly English Academy｜子どものためのオンライン英会話</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky: #5fb3f9;
+      --sky-soft: #e6f3ff;
+      --yellow: #ffeec9;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --border: #e5e7eb;
+      --shadow: 0 18px 50px rgba(93, 135, 180, 0.15);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Noto Sans JP', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: #ffffff;
+      line-height: 1.7;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1200px, 92vw);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--sky), #7fd0ff);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      box-shadow: 0 10px 25px rgba(95, 179, 249, 0.35);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--sky), #3a8ff1);
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(58, 143, 241, 0.35);
+    }
+
+    .btn-primary:hover { transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .hero {
+      padding: 80px 0 40px;
+      background: radial-gradient(circle at 10% 20%, #f0f8ff 0%, transparent 30%),
+                  radial-gradient(circle at 80% 0%, #fff4d9 0%, transparent 26%),
+                  #ffffff;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.3;
+      margin-bottom: 18px;
+      font-weight: 800;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 22px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: var(--sky-soft);
+      color: var(--text);
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 14px;
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      border-radius: 14px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .section {
+      padding: 64px 0;
+    }
+
+    .section h2 {
+      font-size: clamp(22px, 4vw, 30px);
+      margin: 0 0 12px;
+    }
+
+    .section p.lead {
+      color: var(--muted);
+      margin: 0 0 26px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .feature {
+      background: linear-gradient(180deg, #fff, #f9fbff);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      display: grid;
+      gap: 10px;
+      box-shadow: 0 12px 30px rgba(229, 234, 243, 0.7);
+    }
+
+    .feature span.icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--yellow);
+      color: #b57700;
+      font-weight: 700;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: #f5f9ff;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      font-weight: 600;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      align-items: center;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .list li {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .list .dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--sky);
+      margin-top: 4px;
+    }
+
+    .note {
+      background: var(--yellow);
+      padding: 14px 16px;
+      border-radius: 14px;
+      color: #8a6400;
+      font-weight: 600;
+    }
+
+    .testimonial {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 16px 40px rgba(16, 24, 40, 0.06);
+      display: grid;
+      gap: 12px;
+    }
+
+    .testimonial strong { color: var(--text); }
+
+    .faq {
+      display: grid;
+      gap: 12px;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      background: #fff;
+    }
+
+    details summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--text);
+      outline: none;
+    }
+
+    details p { margin: 10px 0 0; color: var(--muted); }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    label { font-weight: 700; font-size: 14px; }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-family: inherit;
+      font-size: 15px;
+      background: #fff;
+    }
+
+    .footer {
+      padding: 32px 0 48px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      header { position: sticky; }
+      .hero { padding-top: 60px; }
+    }
+  </style>
 </head>
-  <body class="bg-slate-50 text-slate-800">
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo">JEA</div>
+        <span>Jolly English Academy</span>
+      </div>
+      <div class="nav-links">
+        <a href="#about">特徴</a>
+        <a href="#ai">AIサポート</a>
+        <a href="#parents">保護者さまへ</a>
+        <a href="#faq">よくある質問</a>
+        <a class="btn btn-primary" href="#trial">無料体験を予約</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="pill">7〜17歳のお子さま向け｜オンライン英会話</div>
+        <h1 class="hero-title">ネイティブ講師と話して、<br>英語で自信を育てる。<br>楽しいオンラインレッスンを日本から。</h1>
+        <p class="hero-sub">Jolly English Academy は、会話力と発音にこだわった子ども向けオンライン英会話。ゲームやプロジェクト中心のライブ授業と、AIチャット「Super Coach Alex」で放課後も楽しく練習。保護者さまには無料レッスンもご用意しています。</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn btn-primary" href="#trial">無料体験レッスンを予約</a>
+          <a class="btn btn-ghost" href="#about">プログラムを見る</a>
+        </div>
+        <div class="highlights">
+          <div class="chip">ネイティブ/ネイティブ級講師のみ</div>
+          <div class="chip">話す力・発音を徹底サポート</div>
+          <div class="chip">AI練習で24時間アウトプット</div>
+          <div class="chip">保護者さまも無料受講OK</div>
+        </div>
+      </div>
+      <div class="card" style="background: linear-gradient(180deg, #fff, #f8fbff);">
+        <div class="badge">初回30分の無料体験 + カウンセリング</div>
+        <h3 style="margin:14px 0 6px; font-size:22px;">3つの安心ポイント</h3>
+        <ul class="list">
+          <li><span class="dot"></span><span>日本語が通じるスタッフが常にサポート。安心して始められます。</span></li>
+          <li><span class="dot"></span><span>録画機能で学びを振り返り、上達を見える化。</span></li>
+          <li><span class="dot"></span><span>毎週のスピーキングチェックで発音と表現を細かく指導。</span></li>
+        </ul>
+        <div class="note" style="margin-top:14px;">無料体験後の無理な勧誘は一切ありません。まずはお気軽にお試しください。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="container">
+      <h2>Jolly English Academy が選ばれる理由</h2>
+      <p class="lead">英語を「科目」ではなく「会話のツール」として身につけるために、子どもたちの好奇心と自信を大切にした設計です。</p>
+      <div class="features">
+        <div class="feature">
+          <span class="icon">A</span>
+          <h3>ネイティブ/ネイティブ級講師のライブ授業</h3>
+          <p class="lead">発音やイントネーションを本場のまま学び、自然なフレーズが口から出るようにトレーニング。小学生から高校生まで、レベル別にクラスを編成します。</p>
+        </div>
+        <div class="feature">
+          <span class="icon">🎯</span>
+          <h3>スピーキング重視のレッスンプラン</h3>
+          <p class="lead">ゲームやミニプロジェクト、ロールプレイを通して「自分の言葉で話す」時間をたっぷり確保。間違いも楽しみながら、表現力と反応速度を伸ばします。</p>
+        </div>
+        <div class="feature">
+          <span class="icon">🔊</span>
+          <h3>丁寧な発音・音読コーチング</h3>
+          <p class="lead">国際音声記号に基づくガイドと口の動きのフィードバックで、伝わる発音を習得。毎月のチェックシートで成長を確認できます。</p>
+        </div>
+        <div class="feature">
+          <span class="icon">🤝</span>
+          <h3>日本人コーチによる伴走</h3>
+          <p class="lead">ご家庭での学習方法や進捗を、バイリンガルコーチがLINEでフォロー。ご質問にも日本語で丁寧にお答えします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ai" style="background: var(--sky-soft);">
+    <div class="container grid-2">
+      <div>
+        <div class="badge">AIチャット「Super Coach Alex」付き</div>
+        <h2>レッスン外でも、英語で話せる相手がいる安心。</h2>
+        <p class="lead">授業で学んだテーマを、Alexと自由に会話してアウトプット。発音チェック、語彙提案、会話例を提示してくれるので、一人でも楽しく復習できます。</p>
+        <ul class="list">
+          <li><span class="dot"></span><span>学校の宿題やスピーチ練習も英語で相談OK。</span></li>
+          <li><span class="dot"></span><span>保護者さまの英語質問にも24時間対応。</span></li>
+          <li><span class="dot"></span><span>学習履歴を講師が確認し、次の授業に反映。</span></li>
+        </ul>
+      </div>
+      <div class="card" style="background:#fff;">
+        <h3 style="margin:0 0 12px;">AIチャット画面イメージ</h3>
+        <div style="border:1px solid var(--border); border-radius:12px; padding:14px; background:#f9fbff;">
+          <p style="margin:0 0 10px; font-weight:700;">Alex: "What did you enjoy today?"</p>
+          <p style="margin:0 0 10px;">お子さま: "I played soccer!"</p>
+          <p style="margin:0 0 10px; color:var(--muted);">Alex: Great! Let's add more details → "I played soccer with my friends after school. We won 2-1!"</p>
+          <p style="margin:0; color:var(--muted);">発音ヒントや語彙のサジェストがリアルタイムで表示されます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="parents">
+    <div class="container grid-2">
+      <div>
+        <h2>保護者さまにも「無料レッスン」をご提供</h2>
+        <p class="lead">お子さまと一緒に英語を学びたい保護者さまのために、月2回の大人向け英会話グループレッスンを無料開放しています。家庭での声かけの仕方や、効果的な褒め方もアドバイス。</p>
+        <div class="note">家族で英語を楽しむ環境づくりを、私たちがサポートします。</div>
+      </div>
+      <div class="card">
+        <h3 style="margin:0 0 10px;">安心のサポート内容</h3>
+        <ul class="list">
+          <li><span class="dot"></span><span>学習相談と成長レポートを毎月メールで送付。</span></li>
+          <li><span class="dot"></span><span>進路・検定に合わせたプラン提案も無料。</span></li>
+          <li><span class="dot"></span><span>振替・休会のご相談も柔軟に対応します。</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: #f9fbff;">
+    <div class="container">
+      <h2>レッスンの流れと料金の目安</h2>
+      <p class="lead">まずは無料体験（30分）でレベルチェック＆カウンセリング。その後、ご希望に合わせて最適なプランをご提案します。</p>
+      <div class="features">
+        <div class="feature">
+          <span class="icon">1</span>
+          <h3>レベルチェック & 体験</h3>
+          <p class="lead">発音・語彙・反応力を確認し、強みと課題をシェア。体験後、保護者さまと学習目標を決めます。</p>
+        </div>
+        <div class="feature">
+          <span class="icon">2</span>
+          <h3>週1〜3回のライブ授業</h3>
+          <p class="lead">1回45分・定員4名の少人数クラス。個別フォローが必要な場合はマンツーマンも選べます。</p>
+        </div>
+        <div class="feature">
+          <span class="icon">3</span>
+          <h3>AI練習 & 家庭サポート</h3>
+          <p class="lead">Super Coach Alexで毎日のアウトプット。宿題は短時間で終わり、楽しみながら続けられます。</p>
+        </div>
+        <div class="feature">
+          <span class="icon">￥</span>
+          <h3>料金目安</h3>
+          <p class="lead">週1回コース 月額 12,800円〜（税別）。ご兄弟割引・年間一括割引あり。詳細は体験時にご案内します。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="trial">
+    <div class="container grid-2" style="gap:30px; align-items:start;">
+      <div>
+        <h2>無料体験レッスンをお申し込みください</h2>
+        <p class="lead">所要時間は約30分。お子さまのレベルに合わせたレッスンを体験し、今後の学び方を一緒に相談しましょう。</p>
+        <div class="testimonial">
+          <strong>保護者の声（東京都・中1）</strong>
+          <p style="margin:0;">「ネイティブの先生に褒められて、自信がついたようです。Super Coach Alexのおかげで、毎日少しでも英語を話す習慣ができました。」</p>
+        </div>
+        <div class="testimonial">
+          <strong>保護者の声（大阪府・小4）</strong>
+          <p style="margin:0;">「発音を細かく指導してくれるので、家族で驚くほどクリアに話せるようになりました。LINEサポートも丁寧です。」</p>
+        </div>
+      </div>
+      <div class="card" style="position:relative; overflow:hidden;">
+        <div style="position:absolute; inset:0; background: radial-gradient(circle at 100% 0, rgba(95,179,249,0.08), transparent 42%);"></div>
+        <div style="position:relative;">
+          <h3 style="margin-top:0;">体験申し込みフォーム</h3>
+          <form>
+            <div>
+              <label for="parent-name">保護者さまのお名前</label>
+              <input id="parent-name" name="parent-name" type="text" placeholder="山田 花子" required>
+            </div>
+            <div>
+              <label for="child-name">お子さまのお名前・学年</label>
+              <input id="child-name" name="child-name" type="text" placeholder="山田 太郎（小5）" required>
+            </div>
+            <div style="display:grid; gap:10px; grid-template-columns: repeat(auto-fit, minmax(180px,1fr));">
+              <div>
+                <label for="age">ご年齢</label>
+                <select id="age" name="age">
+                  <option>7〜9歳</option>
+                  <option>10〜12歳</option>
+                  <option>13〜15歳</option>
+                  <option>16〜17歳</option>
+                </select>
+              </div>
+              <div>
+                <label for="level">現在の英語レベル</label>
+                <select id="level" name="level">
+                  <option>初めて/基礎から</option>
+                  <option>簡単な会話はできる</option>
+                  <option>日常会話はほぼOK</option>
+                  <option>帰国子女/上級</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label for="contact">ご連絡先メールアドレス</label>
+              <input id="contact" name="contact" type="email" placeholder="example@mail.jp" required>
+            </div>
+            <div>
+              <label for="time">ご希望の日時</label>
+              <input id="time" name="time" type="text" placeholder="平日18時以降が希望、土日可など">
+            </div>
+            <div>
+              <label for="message">ご質問・ご要望（任意）</label>
+              <textarea id="message" name="message" rows="3" placeholder="検定対策をしたい、兄弟で受講したい など"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;">無料体験を申し込む</button>
+            <p style="margin:6px 0 0; font-size:13px; color:var(--muted);">送信後、24時間以内に日本人スタッフより日程調整のメールをお送りします。</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <h2>よくある質問</h2>
+      <div class="faq">
+        <details open>
+          <summary>英語が全く初めてでも大丈夫ですか？</summary>
+          <p>はい、初心者のお子さま向けに日本語サポートを交えたクラスがあります。ゲームや歌からスタートし、楽しみながら英語の音に慣れていただきます。</p>
+        </details>
+        <details>
+          <summary>兄弟で一緒に受講できますか？</summary>
+          <p>同じ時間帯にクラスを組むことも、別々のレベルに分けることも可能です。兄弟割引もございますので、体験時にご相談ください。</p>
+        </details>
+        <details>
+          <summary>レッスンの録画は見返せますか？</summary>
+          <p>はい、毎回の録画リンクを共有します。復習や、保護者さまがレッスンの様子を確認する際にご活用ください。</p>
+        </details>
+        <details>
+          <summary>支払い方法と解約について教えてください。</summary>
+          <p>クレジットカードまたは銀行振込に対応しています。月ごとの更新で、解約手続きは毎月15日までにお知らせいただければ翌月以降の課金は停止します。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container" style="display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;">
+      <div class="brand">
+        <div class="logo">JEA</div>
+        <span>Jolly English Academy</span>
+      </div>
+      <div>〒 Tokyo｜オンライン専用スクール・運営：JEA合同会社</div>
+      <div>お問合せ: hello@jollyenglish.jp</div>
+    </div>
+  </footer>
+</body>
 </html>
